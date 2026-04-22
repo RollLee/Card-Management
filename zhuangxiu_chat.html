@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI 财务管家 - 装修</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+<style>
+  body { background-color: #E8EAF0; color: #F8F9FA; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .glass-card { background: #13151F; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+  .ai-glow { box-shadow: 0 0 20px rgba(109, 93, 255, 0.4); }
+  .gradient-text { background: linear-gradient(135deg, #6D5DFF 0%, #00F0FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .chat-bubble-ai { background: linear-gradient(135deg, rgba(109, 93, 255, 0.15) 0%, rgba(0, 240, 255, 0.05) 100%); border-left: 3px solid #6D5DFF; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* 侧边栏动画 */
+  .sidebar-panel {
+    position: absolute;
+    top: 0; right: 0;
+    width: 75%;
+    height: 100%;
+    background: rgba(18, 20, 32, 0.97);
+    backdrop-filter: blur(24px);
+    border-left: 1px solid rgba(255,255,255,0.08);
+    z-index: 50;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar-panel.open { transform: translateX(0); }
+  .sidebar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+  .chat-history-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.03);
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .chat-history-item:hover { background: rgba(109, 93, 255, 0.12); border-color: rgba(109, 93, 255, 0.3); }
+
+  /* 装修页专用：加载进度条动画 */
+  .progress-bar { background: linear-gradient(90deg, #6D5DFF, #00F0FF); }
+
+  /* 逐条淡入动画 */
+  @keyframes msgFadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .msg-item {
+    opacity: 0;
+    animation: msgFadeUp 0.45s ease forwards;
+  }
+
+  .chat-bubble-thinking {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 3px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px 14px 14px 2px;
+  }
+  @keyframes scanLine {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+  }
+</style>
+<link href="./unionpay-inline-overrides.css" rel="stylesheet"/>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-black" style="background-color: #E8EAF0;">
+
+<!-- Mobile Container -->
+<div class="w-[375px] h-[812px] glass-card rounded-[40px] overflow-hidden relative flex flex-col border border-white/10">
+
+  <!-- Status Bar -->
+  <div class="px-8 pt-12 pb-4 flex justify-between items-center text-xs opacity-60">
+    <span>09:41</span>
+    <div class="flex gap-1.5">
+      <iconify-icon icon="mingcute:signal-line"></iconify-icon>
+      <iconify-icon icon="mingcute:wifi-line"></iconify-icon>
+      <iconify-icon icon="mingcute:battery-line"></iconify-icon>
+    </div>
+  </div>
+
+  <!-- Header（与主页完全一致） -->
+  <div class="px-6 py-4 flex items-center justify-between">
+    <button id="sidebarBtn" onclick="openSidebar()" class="w-10 h-10 rounded-full glass-card flex items-center justify-center">
+      <iconify-icon class="text-xl" icon="solar:hamburger-menu-bold-duotone"></iconify-icon>
+    </button>
+    <div class="flex flex-col items-center">
+      <h1 class="text-lg font-bold tracking-tight">小云AI <span class="text-[10px] font-normal opacity-50 ml-1">v4.2</span></h1>
+      <p class="text-[10px] text-emerald-400 flex items-center gap-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 实时数据同步中
+      </p>
+    </div>
+    <div class="w-10"></div>
+  </div>
+
+  <!-- ===== Chat Area（装修对话内容） ===== -->
+  <div class="flex-1 overflow-y-auto no-scrollbar px-6 py-4 space-y-6">
+
+    <!-- Time Indicator -->
+    <div class="text-center msg-item" style="animation-delay: 0.1s">
+      <span class="text-[10px] bg-white/5 px-3 py-1 rounded-full opacity-40">今天 2026年04月08日</span>
+    </div>
+
+    <!-- AI 问候 -->
+    <div class="chat-bubble-ai p-4 rounded-2xl rounded-tl-none space-y-2 msg-item" style="animation-delay: 0.5s">
+      <p class="text-sm leading-relaxed text-slate-200">王先生，您好，我是您的专属智能体小云，请问有什么可以帮您？😊</p>
+    </div>
+
+    <!-- 用户消息 1：装修需求 -->
+    <div class="flex justify-end msg-item" style="animation-delay: 1s">
+      <div class="bg-[#6D5DFF] p-4 rounded-2xl rounded-tr-none max-w-[80%]">
+        <p class="text-sm leading-relaxed">小云，我这3个月要装修房子，装修方案见文件上传，有好几笔大额支出，帮我梳理一下整个流程。我手里有8张信用卡，完全记混了每张的账单日、免息期和权益，别让我错过优惠，也别搞出逾期。</p>
+      </div>
+    </div>
+
+    <!-- 小云思考中 1 -->
+    <div class="msg-item" style="animation-delay: 1.4s">
+      <div class="chat-bubble-thinking p-3 space-y-1.5 text-[11px] opacity-70 max-w-[86%]" style="background: rgba(255, 255, 255, 0.03); border-left: 3px solid rgba(255, 255, 255, 0.15); border-radius: 14px 14px 14px 2px;">
+        <p class="text-[#FF8C42] font-mono font-semibold mb-1" style="animation: scanLine 1.2s ease-in-out infinite;">小云 深度思考中...</p>
+        <p class="font-mono opacity-60">1. OCR视觉解析《装修报价单.pdf》，提取核心节点与金额</p>
+        <p class="font-mono opacity-60">2. NLP语义识别完成：核算总造价约40万元人民币</p>
+        <p class="font-mono opacity-60">3. 正在匹配标准家装施工周期模型（拆改→水电→主材）</p>
+      </div>
+    </div>
+
+    <!-- AI 回复 1：装修时间表 -->
+    <div class="chat-bubble-ai p-4 rounded-2xl rounded-tl-none space-y-3 msg-item" style="animation-delay: 1.9s">
+      <p class="text-sm leading-relaxed text-slate-200">收到您的装修需求。根据您的装修方案，核算出总装修预算 <span class="text-[#FF8C42] font-bold">40万元</span>，结合标准施工进度，精准拆分各阶段具体付款日期：</p>
+
+      <!-- 时间表卡片 -->
+      <div class="bg-white/5 rounded-2xl border border-white/5 overflow-hidden">
+        <div class="px-3 py-2 bg-[#FF8C42]/8 border-b border-[#FF8C42]/15 flex items-center gap-2">
+          <iconify-icon class="text-[#FF8C42]" icon="solar:calendar-bold-duotone"></iconify-icon>
+          <span class="font-semibold text-[#FF8C42] text-xs">装修付款时间表</span>
+        </div>
+        <div class="divide-y divide-white/5">
+          <div class="px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-[10px] font-mono text-white/30 w-14">4月10日</span>
+              <span class="text-xs text-white/80">拆改工程首期款</span>
+            </div>
+            <span class="text-sm font-bold text-[#FF8C42]">¥150,000</span>
+          </div>
+          <div class="px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-[10px] font-mono text-white/30 w-14">4月18日</span>
+              <span class="text-xs text-white/80">支付水电改造款</span>
+            </div>
+            <span class="text-sm font-bold text-[#FF8C42]">¥50,000</span>
+          </div>
+          <div class="px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-[10px] font-mono text-white/30 w-14">5月10日</span>
+              <span class="text-xs text-white/80">主材集中采购款</span>
+            </div>
+            <span class="text-sm font-bold text-[#FF8C42]">¥200,000</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-[11px] text-white/40">完整时间轴已同步至您的云闪付日历，到期会自动提醒。</p>
+    </div>
+
+    <!-- 用户消息 2：用卡搭配 -->
+    <div class="flex justify-end msg-item" style="animation-delay: 2.4s">
+      <div class="bg-[#6D5DFF] p-4 rounded-2xl rounded-tr-none max-w-[80%]">
+        <p class="text-sm leading-relaxed">那我这8张信用卡，该怎么搭配这几个日期支付最划算？具体用哪张卡、对应还款日期是哪天，帮我给明确建议，现金、信用卡、贷款怎么选也说清楚。</p>
+      </div>
+    </div>
+
+    <!-- 小云思考中 2 -->
+    <div class="msg-item" style="animation-delay: 2.8s">
+      <div class="chat-bubble-thinking p-3 space-y-1.5 text-[11px] opacity-70 max-w-[86%]" style="background: rgba(255, 255, 255, 0.03); border-left: 3px solid rgba(255, 255, 255, 0.15); border-radius: 14px 14px 14px 2px;">
+        <p class="text-[#FF8C42] font-mono font-semibold mb-1" style="animation: scanLine 1.2s ease-in-out infinite;">小云 深度思考中...</p>
+        <p class="font-mono opacity-60">1. 调取底层清算网络，盘点名下8张卡动态余额（总可用额度44.5万）</p>
+        <p class="font-mono opacity-60">2. 运行「账单日错配算法」，寻找最长免息期交集</p>
+        <p class="font-mono opacity-60">3. 检索各行"家装节""大额分期"优惠费率</p>
+        <p class="font-mono opacity-60">4. 多目标优化：免息期最大化 + 手续费最小化 + 权益叠加</p>
+      </div>
+    </div>
+
+    <!-- AI 回复 2：用卡方案 -->
+    <div class="chat-bubble-ai p-4 rounded-2xl rounded-tl-none space-y-3 msg-item" style="animation-delay: 3.3s">
+      <p class="text-sm leading-relaxed text-slate-200">已全面调取您名下8张信用卡的账单日、还款日、免息期、专属权益，结合每笔付款的具体日期，为您制定<span class="text-[#FF8C42] font-bold">零失误支付方案</span>：</p>
+
+      <!-- 用卡方案卡片 -->
+      <div class="bg-white/5 rounded-2xl border border-white/5 overflow-hidden">
+        <div class="px-3 py-2 bg-[#00F0FF]/8 border-b border-[#00F0FF]/15 flex items-center gap-2">
+          <iconify-icon class="text-[#00F0FF]" icon="solar:card-bold-duotone"></iconify-icon>
+          <span class="font-semibold text-[#00F0FF] text-xs">最优用卡方案</span>
+        </div>
+
+        <!-- 4月10日 -->
+        <div class="px-4 py-3 border-b border-white/5">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-mono text-white/30">4月10日</span>
+              <span class="text-xs text-white/80">拆改工程首期款</span>
+            </div>
+            <span class="text-sm font-bold">¥150,000</span>
+          </div>
+          <div class="bg-white/[0.03] rounded-xl p-2.5 flex items-center gap-2">
+            <div class="w-8 h-5 bg-gradient-to-r from-green-600 to-green-500 rounded flex items-center justify-center text-[7px] text-white font-bold italic">银联</div>
+            <div>
+              <p class="text-[11px] font-medium">工行信用卡 <span class="text-[#00F0FF] text-[10px]">· 每月5日出账</span></p>
+              <p class="text-[10px] text-white/40">享 51天免息期</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4月18日 -->
+        <div class="px-4 py-3 border-b border-white/5">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-mono text-white/30">4月18日</span>
+              <span class="text-xs text-white/80">支付水电改造款</span>
+            </div>
+            <span class="text-sm font-bold">¥50,000</span>
+          </div>
+          <div class="bg-white/[0.03] rounded-xl p-2.5 flex items-center gap-2">
+            <div class="w-8 h-5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded flex items-center justify-center text-[7px] text-white font-bold italic">VISA</div>
+            <div>
+              <p class="text-[11px] font-medium">招行信用卡 <span class="text-[#00F0FF] text-[10px]">· 每月12日出账</span></p>
+              <p class="text-[10px] text-white/40">1. 享44天免息期</p>
+              <p class="text-[10px] text-[#FFD700]">2. 装修类商户满3万返200元消费金</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5月10日 -->
+        <div class="px-4 py-3">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-mono text-white/30">5月10日</span>
+              <span class="text-xs text-white/80">主材集中采购款</span>
+            </div>
+            <span class="text-sm font-bold">¥200,000</span>
+          </div>
+          <p class="text-[10px] text-[#FF6B6B] mb-2">⚠️ 当前单卡额度不足，建议组合拆分：</p>
+          <div class="space-y-2">
+            <div class="bg-white/[0.03] rounded-xl p-2.5 flex items-center gap-2">
+              <div class="w-8 h-5 bg-gradient-to-r from-red-600 to-red-500 rounded flex items-center justify-center text-[7px] text-white font-bold italic">银联</div>
+              <div>
+                <p class="text-[11px] font-medium">建行信用卡 <span class="text-[#00F0FF] text-[10px]">· 分12期支付 ¥100,000</span></p>
+                <p class="text-[10px] text-white/40">1. 享53-55天免息期</p>
+                <p class="text-[10px] text-[#FFD700]">2. 装修分期12期手续费5折</p>
+              </div>
+            </div>
+            <div class="bg-white/[0.03] rounded-xl p-2.5 flex items-center gap-2">
+              <div class="w-8 h-5 bg-gradient-to-r from-blue-500 to-blue-400 rounded flex items-center justify-center text-[7px] text-white font-bold italic">VISA</div>
+              <div>
+                <p class="text-[11px] font-medium">交行信用卡 <span class="text-[#00F0FF] text-[10px]">· 支付 ¥100,000</span></p>
+                <p class="text-[10px] text-white/40">1. 享53-55天免息期</p>
+                <p class="text-[10px] text-[#FFD700]">2. 满5万赠家电保养服务</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 用户消息 3：日常消费调整 -->
+    <div class="flex justify-end msg-item" style="animation-delay: 3.8s">
+      <div class="bg-[#6D5DFF] p-4 rounded-2xl rounded-tr-none max-w-[80%]">
+        <p class="text-sm leading-relaxed">这次装修大额支出多，后续我的日常消费有没有要调整的？别影响装修资金，也别太压缩生活。</p>
+      </div>
+    </div>
+
+    <!-- 小云思考中 3 -->
+    <div class="msg-item" style="animation-delay: 4.2s">
+      <div class="chat-bubble-thinking p-3 space-y-1.5 text-[11px] opacity-70 max-w-[86%]" style="background: rgba(255, 255, 255, 0.03); border-left: 3px solid rgba(255, 255, 255, 0.15); border-radius: 14px 14px 14px 2px;">
+        <p class="text-[#FF8C42] font-mono font-semibold mb-1" style="animation: scanLine 1.2s ease-in-out infinite;">小云 深度思考中...</p>
+        <p class="font-mono opacity-60">1. 调取用户近6个月日常消费图谱（餐饮、潮玩、轻奢）</p>
+        <p class="font-mono opacity-60">2. 建立现金流压力测试模型，测算未来3个月还款峰值</p>
+        <p class="font-mono opacity-60">3. 匹配柔性降级消费策略</p>
+      </div>
+    </div>
+
+    <!-- AI 回复 3：消费建议 -->
+    <div class="chat-bubble-ai p-4 rounded-2xl rounded-tl-none space-y-3 msg-item" style="animation-delay: 4.7s">
+      <p class="text-sm leading-relaxed text-slate-200">根据您本次40万装修预算，以及过往6个月日常消费数据，您在餐饮外食、数码潮玩、轻奢好物、周末休闲等场景，月均支出约 <span class="text-[#FF8C42] font-bold">¥8,000</span>。</p>
+      <p class="text-sm leading-relaxed text-slate-200">为保障装修资金充足，同时不影响核心生活品质与后续旅行解压计划，建议未来3个月（4-6月）在非必要的数码轻奢、高端餐饮场景<span class="text-[#FFD700] font-bold">每月适度缩减 ¥1,500</span>。</p>
+
+      <!-- 消费建议卡片 -->
+      <div class="bg-gradient-to-r from-[#FF8C42]/10 to-[#6D5DFF]/10 rounded-2xl p-4 border border-[#FF8C42]/20">
+        <div class="grid grid-cols-2 gap-3 mb-3">
+          <div class="text-center">
+            <p class="text-[10px] opacity-50">3个月累计缩减</p>
+            <p class="text-lg font-bold text-[#FF8C42]">¥4,500</p>
+          </div>
+          <div class="text-center">
+            <p class="text-[10px] opacity-50">覆盖用途</p>
+            <p class="text-xs font-medium">垃圾清运 + 材料搬运</p>
+          </div>
+        </div>
+        <p class="text-[11px] text-white/50 text-center">7月装修收尾后，可立即恢复正常消费</p>
+      </div>
+    </div>
+
+    <!-- 用户消息 4：设置专属跟进 -->
+    <div class="flex justify-end msg-item" style="animation-delay: 5.2s">
+      <div class="bg-[#6D5DFF] p-4 rounded-2xl rounded-tr-none max-w-[80%]">
+        <p class="text-sm leading-relaxed">小云，太专业了，整个装修周期计划可能还会改动，比如付款日期调整、增项加钱，后续有任何问题，我想随时快速咨询，帮我设置专属跟进方式。</p>
+      </div>
+    </div>
+
+    <!-- 小云思考中 4 -->
+    <div class="msg-item" style="animation-delay: 5.6s">
+      <div class="chat-bubble-thinking p-3 space-y-1.5 text-[11px] opacity-70 max-w-[86%]" style="background: rgba(255, 255, 255, 0.03); border-left: 3px solid rgba(255, 255, 255, 0.15); border-radius: 14px 14px 14px 2px;">
+        <p class="text-[#FF8C42] font-mono font-semibold mb-1" style="animation: scanLine 1.2s ease-in-out infinite;">小云 深度思考中...</p>
+        <p class="font-mono opacity-60">1. 封装上下文状态，冻结当前8张卡装修分配方案变量</p>
+        <p class="font-mono opacity-60">2. 正在云闪付底层生成独立沙盒（快指令）</p>
+      </div>
+    </div>
+
+    <!-- AI 回复 4：快指令卡片 -->
+    <div class="chat-bubble-ai p-4 rounded-2xl rounded-tl-none space-y-3 msg-item" style="animation-delay: 6.1s">
+      <p class="text-sm leading-relaxed text-slate-200">
+        好的王先生，根据您的装修全周期跟进需求，现已为您创建本次装修专属「快指令」，命名为
+        <span class="text-[#FF8C42] font-bold">王先生装修资金管家</span>。
+        后续无论装修计划调整、付款日期变更、增项预算重新核算、用卡方案优化、权益查询等任何问题，都可直接唤醒该快指令，全程绑定您的8张信用卡数据与装修进度，无需重复录入需求。
+      </p>
+      <!-- 快指令卡片 -->
+      <div class="bg-white/5 p-4 rounded-2xl border border-[#FF8C42]/20">
+        <div class="flex justify-between items-start mb-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-[#FF8C42]/15 border border-[#FF8C42]/30 flex items-center justify-center">
+              <iconify-icon class="text-[#FF8C42] text-base" icon="solar:bolt-bold-duotone"></iconify-icon>
+            </div>
+            <div>
+              <p class="text-xs font-medium">王先生装修资金管家</p>
+              <p class="text-[10px] text-[#FF8C42]/70">快指令 · 已激活</p>
+            </div>
+          </div>
+          <span class="text-[10px] bg-[#FF8C42]/10 border border-[#FF8C42]/30 text-[#FF8C42] px-2 py-0.5 rounded-full">专属</span>
+        </div>
+        <!-- 功能标签 -->
+        <div class="flex flex-wrap gap-1.5 mb-3">
+          <span class="text-[10px] bg-white/5 border border-white/10 text-slate-400 px-2 py-0.5 rounded-full">付款日期变更</span>
+          <span class="text-[10px] bg-white/5 border border-white/10 text-slate-400 px-2 py-0.5 rounded-full">增项预算核算</span>
+          <span class="text-[10px] bg-white/5 border border-white/10 text-slate-400 px-2 py-0.5 rounded-full">用卡方案优化</span>
+          <span class="text-[10px] bg-white/5 border border-white/10 text-slate-400 px-2 py-0.5 rounded-full">权益查询</span>
+        </div>
+        <!-- 绑定数据 -->
+        <div class="grid grid-cols-2 gap-2 mb-3">
+          <div class="bg-white/[0.03] rounded-xl p-2">
+            <p class="text-[10px] opacity-30 mb-0.5">绑定卡片</p>
+            <p class="text-xs font-medium">8张信用卡</p>
+          </div>
+          <div class="bg-white/[0.03] rounded-xl p-2">
+            <p class="text-[10px] opacity-30 mb-0.5">装修预算</p>
+            <p class="text-xs font-medium text-[#FF8C42]">¥400,000</p>
+          </div>
+        </div>
+        <div class="h-px bg-white/5 mb-3"></div>
+        <button class="w-full py-2.5 rounded-xl bg-[#FF8C42]/10 border border-[#FF8C42]/30 text-[#FF8C42] text-xs font-medium flex items-center justify-center gap-1.5 active:scale-95 transition-all">
+          <iconify-icon icon="solar:bolt-bold-duotone" class="text-sm"></iconify-icon>
+          立即唤醒快指令
+        </button>
+      </div>
+    </div>
+
+    <div class="h-4"></div>
+
+    <div id="chatMessages"></div>
+  </div>
+
+  <!-- Quick Actions Scroll（与主页一致） -->
+  <div class="px-6 py-2 overflow-x-auto no-scrollbar whitespace-nowrap flex gap-3">
+    <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full text-xs">
+      <iconify-icon class="text-[#FF8C42]" icon="solar:home-bold-duotone"></iconify-icon>
+      装修进度更新
+    </div>
+    <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full text-xs opacity-70">
+      <iconify-icon class="text-[#6D5DFF]" icon="solar:card-2-bold-duotone"></iconify-icon>
+      重新规划用卡顺序
+    </div>
+    <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full text-xs opacity-70">
+      <iconify-icon class="text-[#00F0FF]" icon="solar:calculator-bold-duotone"></iconify-icon>
+      增项预算核算
+    </div>
+  </div>
+
+  <!-- Input Bar（与主页完全一致） -->
+  <div class="px-6 py-4 bg-[#0A0C14]">
+    <div class="relative flex items-center">
+      <input id="chatInput" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-12 text-sm focus:outline-none focus:border-[#6D5DFF]/50 transition-all" placeholder="问问 小云AI..." type="text" onkeydown="if(event.key==='Enter')sendMessage()"/>
+      <iconify-icon class="absolute left-4 text-xl opacity-40" icon="solar:minimalistic-magnifer-bold-duotone"></iconify-icon>
+      <button id="sendBtn" onclick="sendMessage()" class="absolute right-2 w-10 h-10 bg-gradient-to-tr from-[#6D5DFF] to-[#00F0FF] rounded-xl flex items-center justify-center shadow-lg ai-glow">
+        <iconify-icon class="text-white" icon="solar:plain-bold"></iconify-icon>
+      </button>
+    </div>
+  </div>
+
+
+
+  <!-- 侧边栏遮罩 -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <!-- 侧边栏面板（与主页完全一致） -->
+  <div class="sidebar-panel" id="sidebarPanel">
+    <div class="px-5 pt-14 pb-4 flex items-center justify-between border-b border-white/5">
+      <div>
+        <p class="text-sm font-semibold">聊天记录</p>
+        <p class="text-[10px] opacity-40 mt-0.5">2 个会话</p>
+      </div>
+      <button onclick="closeSidebar()" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+        <iconify-icon class="text-base opacity-60" icon="solar:close-circle-bold"></iconify-icon>
+      </button>
+    </div>
+    <div class="px-4 py-4 flex flex-col gap-3">
+      <!-- 历史 1：装修（当前页，高亮） -->
+      <a href="zhuangxiu_chat.html" class="chat-history-item" style="background:rgba(109,93,255,0.12);border-color:rgba(109,93,255,0.3)">
+        <div class="w-9 h-9 rounded-full bg-[#FF8C42]/15 border border-[#FF8C42]/30 flex items-center justify-center flex-shrink-0">
+          <iconify-icon class="text-base text-[#FF8C42]" icon="solar:home-bold-duotone"></iconify-icon>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium truncate">装修</p>
+          <p class="text-[10px] opacity-40 truncate mt-0.5">主卧预算还差 ¥12,000...</p>
+        </div>
+        <iconify-icon class="text-sm opacity-30 flex-shrink-0" icon="solar:alt-arrow-right-bold"></iconify-icon>
+      </a>
+      <!-- 历史 2：香港之旅 -->
+      <a href="index.html" class="chat-history-item">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#6D5DFF] to-[#00F0FF] p-[2px] flex-shrink-0">
+          <div class="w-full h-full rounded-full bg-[#0A0C14] flex items-center justify-center">
+            <iconify-icon class="text-base text-[#6D5DFF]" icon="fluent:bot-24-filled"></iconify-icon>
+          </div>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium truncate">香港之旅</p>
+          <p class="text-[10px] opacity-40 truncate mt-0.5">香港三天沉浸解压之旅已规划...</p>
+        </div>
+        <iconify-icon class="text-sm opacity-30 flex-shrink-0" icon="solar:alt-arrow-right-bold"></iconify-icon>
+      </a>
+    </div>
+    <div class="px-4 pt-2">
+      <button class="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border border-dashed border-white/10 text-xs opacity-50 hover:opacity-80 transition-opacity">
+        <iconify-icon icon="solar:add-circle-bold"></iconify-icon>
+        新建会话
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function openSidebar() {
+    document.getElementById('sidebarPanel').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+  }
+  function closeSidebar() {
+    document.getElementById('sidebarPanel').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  }
+
+  // AI 模拟回复库（装修相关）
+  const aiReplies = [
+    '好的，我来帮您查看装修进度。目前硬装主材已支付 60%，下一笔预计 04.25 支付全屋定制尾款。',
+    '已为您核算：本月装修支出 ¥205,000，剩余免息可用额度 ¥214,500，资金安排充裕。',
+    '收到！建议下次支付使用建行卡，免息期 50 天，可以最大化资金利用效率。',
+    '已更新装修账本：主卧预算还差 ¥12,000，建议从备用金中调配。',
+    '明白！根据当前进度，预计 6 月底前完成全部装修支付，整体资金安排健康。',
+  ];
+  let replyIndex = 0;
+
+  function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const container = document.getElementById('chatMessages');
+
+    // 添加用户消息
+    const userMsg = document.createElement('div');
+    userMsg.className = 'flex justify-end msg-item';
+    userMsg.style.animationDelay = '0s';
+    userMsg.innerHTML = `<div class="bg-[#6D5DFF] p-4 rounded-2xl rounded-tr-none max-w-[80%]"><p class="text-sm">${escapeHtml(text)}</p></div>`;
+    container.appendChild(userMsg);
+
+    input.value = '';
+
+    // 滚动到底部
+    const chatArea = container.parentElement;
+    chatArea.scrollTop = chatArea.scrollHeight;
+
+    // 显示思考中
+    setTimeout(() => {
+      const thinking = document.createElement('div');
+      thinking.className = 'chat-bubble-ai p-4 rounded-2xl rounded-tl-none msg-item';
+      thinking.id = 'thinkingBubble';
+      thinking.style.animationDelay = '0s';
+      thinking.innerHTML = `<p class="text-sm text-slate-200 opacity-60"><iconify-icon icon="solar:refresh-bold" class="animate-spin mr-1"></iconify-icon> 正在思考...</p>`;
+      container.appendChild(thinking);
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      // 显示AI回复
+      setTimeout(() => {
+        const thinkEl = document.getElementById('thinkingBubble');
+        if (thinkEl) thinkEl.remove();
+
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'chat-bubble-ai p-4 rounded-2xl rounded-tl-none space-y-3 msg-item';
+        aiMsg.style.animationDelay = '0s';
+        aiMsg.innerHTML = `<p class="text-sm leading-relaxed text-slate-200">${aiReplies[replyIndex % aiReplies.length]}</p>`;
+        container.appendChild(aiMsg);
+        replyIndex++;
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }, 1500);
+    }, 500);
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+</script>
+
+<script src="./app.js"></script>
+<script src="../unionpay-modao-overrides.js"></script>
+</body>
+</html>

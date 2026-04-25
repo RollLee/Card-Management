@@ -139,7 +139,7 @@
 <body class="flex items-center justify-center min-h-screen bg-black" style="background-color: #E8EAF0;">
 
 <!-- Mobile Container -->
-<div class="w-[375px] h-[812px] glass-card rounded-[40px] overflow-hidden relative flex flex-col border border-white/10">
+<div class="w-[440px] h-[956px] glass-card rounded-[44px] overflow-hidden relative flex flex-col border border-white/10">
 
   <!-- Status Bar -->
   <div class="px-8 pt-12 pb-4 flex justify-between items-center text-xs opacity-60">
@@ -173,6 +173,10 @@
       <div class="text-center msg-item">
         <span class="text-[10px] bg-white/5 px-3 py-1 rounded-full opacity-40">今天 2026年04月08日</span>
       </div>
+      <!-- AI 问候 -->
+      <div class="chat-bubble-ai p-4 rounded-2xl rounded-tl-none space-y-2 msg-item">
+        <p class="text-sm leading-relaxed text-slate-200">王先生，您好，我是您的专属智能体小云，请问有什么可以帮您？😊</p>
+      </div>
     </div>
 
     <!-- Step 1: 用户消息1 + 思考中1 + AI回复1 -->
@@ -189,7 +193,7 @@
         <div class="chat-bubble-thinking p-3 space-y-1.5 text-[11px] opacity-70 max-w-[86%]" style="background: rgba(255, 255, 255, 0.03); border-left: 3px solid rgba(255, 255, 255, 0.15); border-radius: 14px 14px 14px 2px;">
           <p class="text-[#00F0FF] font-mono font-semibold mb-1" style="animation: scanLine 1.2s ease-in-out infinite;">小云 深度思考中...</p>
           <p class="font-mono opacity-60">1. 捕捉关键词：香港、解压、三天...</p>
-          <p class="font-mono opacity-60">2. 调用情绪画像（高压/需引导）与差旅标签</p>
+          <p class="font-mono opacity-60">2. 调用情绪画像（高压/需引导），询问差旅选择倾向</p>
         </div>
       </div>
 
@@ -212,15 +216,16 @@
       <div class="msg-item">
         <div class="chat-bubble-thinking p-3 space-y-1.5 text-[11px] opacity-70 max-w-[86%]" style="background: rgba(255, 255, 255, 0.03); border-left: 3px solid rgba(255, 255, 255, 0.15); border-radius: 14px 14px 14px 2px;">
           <p class="text-[#00F0FF] font-mono font-semibold mb-1" style="animation: scanLine 1.2s ease-in-out infinite;">小云 深度思考中...</p>
-          <p class="font-mono opacity-60">1. 测算实时离岸人民币汇率走势（CNH）及各行境外货币转换费...</p>
-          <p class="font-mono opacity-60">2. 检索云闪付「优计划」香港专区返现池</p>
-          <p class="font-mono opacity-60">3. 排查名下 8 张信用卡，演算境外最优方案</p>
+          <p class="font-mono opacity-60">1. 调用「携程智行」OTA，搜索香港机票、维多利亚港住宿信息...</p>
+          <p class="font-mono opacity-60">2. 测算实时离岸人民币汇率走势（CNH）及各行境外货币转换费...</p>
+          <p class="font-mono opacity-60">3. 检索云闪付「优计划」香港专区活动</p>
+          <p class="font-mono opacity-60">4. 分析名下 8 张信用卡，演算境外最优方案</p>
         </div>
       </div>
 
       <!-- AI 回复: 旅行方案 -->
       <div class="chat-bubble-ai p-4 rounded-2xl rounded-tl-none space-y-3 msg-item">
-        <p class="text-sm text-slate-200 leading-relaxed">明白。正在为您规划香港三天<span class="text-[#00F0FF] font-semibold">「沉浸解压之旅」</span>，已接入 OTA 平台机酒库，名下 8 张信用卡完成最优演算。方案如下：</p>
+        <p class="text-sm text-slate-200 leading-relaxed">明白。正在为您规划香港三天<span class="text-[#00F0FF] font-semibold">「沉浸解压之旅」</span>，已接入 OTA 平台，名下 8 张信用卡完成最优计划演算。方案如下：</p>
 
         <!-- 旅行方案卡片 -->
         <div class="trip-plan-card text-[12px]" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 12px; overflow: hidden; display: none; opacity: 0; transform: translateY(8px); transition: opacity 0.6s ease, transform 0.6s ease;">
@@ -232,7 +237,7 @@
             <iconify-icon class="text-[#FFD700] mt-0.5 flex-shrink-0" icon="solar:airplane-bold"></iconify-icon>
             <div class="flex-1">
               <p class="font-semibold text-white/90 mb-0.5">交通建议</p>
-              <p class="text-white/55 leading-relaxed">建议用<span class="text-white/80">招行卡</span>预定 ¥2,400 往返机票——昨日刚出账单，可享 <span class="text-[#00F0FF]">52 天最长免息期</span>。工行白金卡还有 2 次接送机权益，建议本次往返使用。</p>
+              <p class="text-white/55 leading-relaxed">建议用<span class="text-white/80">招行卡[1243]</span>预定 ¥2,400 往返机票——昨日刚出账单，可享 <span class="text-[#00F0FF]">52 天最长免息期</span>。</p>
               <!-- 航班信息小卡片 -->
               <div class="mt-2.5 space-y-2">
                 <!-- 去程 -->
@@ -262,8 +267,8 @@
                     </div>
                   </div>
                   <div class="px-2.5 py-1.5 flex justify-between items-center border-t" style="border-color: rgba(255,181,194,0.1);">
-                    <span class="text-[8px] text-white/30">招行卡 · 免息52天</span>
-                    <span class="text-[9px] font-bold text-white/60">¥1,200</span>
+                    <span class="text-[12px] text-white/30">招行卡[1243] · 免息52天</span>
+                    <span class="text-[12px] font-bold text-white/60">¥1,200</span>
                   </div>
                 </div>
                 <!-- 回程 -->
@@ -293,18 +298,19 @@
                     </div>
                   </div>
                   <div class="px-2.5 py-1.5 flex justify-between items-center border-t" style="border-color: rgba(168,216,234,0.1);">
-                    <span class="text-[8px] text-white/30">招行卡 · 免息52天</span>
-                    <span class="text-[9px] font-bold text-white/60">¥1,200</span>
+                    <span class="text-[12px] text-white/30">招行卡[1243] · 免息50天</span>
+                    <span class="text-[12px] font-bold text-white/60">¥1,200</span>
                   </div>
                 </div>
               </div>
+              <p class="text-white/55 leading-relaxed mt-2">工行白金卡还有 2 次接送机权益，建议本次往返使用。</p>
             </div>
           </div>
           <div class="trip-plan-row" style="padding: 10px 12px; display: flex; gap: 10px; align-items: flex-start;">
             <iconify-icon class="text-[#00F0FF] mt-0.5 flex-shrink-0" icon="solar:buildings-bold"></iconify-icon>
             <div class="flex-1">
               <p class="font-semibold text-white/90 mb-0.5">住宿建议</p>
-              <p class="text-white/55 leading-relaxed"><span class="text-white/80">香港丽晶酒店</span>（3 晚约 ¥5,500）是极佳选择，但您当前卡包<span class="text-[#FF6B6B]">缺乏高端酒店权益卡</span>，直接预订无法实现利益最大化。</p>
+              <p class="text-white/55 leading-relaxed"><span class="text-white/80">香港丽晶酒店</span>（3 晚约 ¥5,500）是极佳选择，但您当前卡包<span class="text-[#FF6B6B]">缺乏高端酒店权益卡</span>，直接预订无法实现利益最大化。⚠️</p>
               <!-- 酒店预定信息小卡片 -->
               <div class="mt-2.5 rounded-xl overflow-hidden border" style="background: rgba(195,177,225,0.08); border-color: rgba(195,177,225,0.2);">
                 <div class="px-2.5 py-2 flex items-center gap-2.5" style="background: rgba(195,177,225,0.1);">
@@ -336,13 +342,12 @@
                 </div>
                 <div class="px-2.5 py-2 flex justify-between items-center border-t" style="border-color: rgba(195,177,225,0.1);">
                   <div class="flex items-center gap-2">
-                    <span class="text-[8px] text-white/30">单价</span>
-                    <span class="text-[9px] font-bold text-white/60">¥2,750/晚</span>
-                    <span class="text-[7px] px-1 py-0.5 rounded" style="background: rgba(16,185,129,0.1); color: #6ee7b7;">含早</span>
+                    <span class="text-[12px] text-white/30">单价</span>
+                    <span class="text-[12px] font-bold text-white/60">¥2,750/晚</span>
+                    <span class="text-[12px] px-1 py-0.5 rounded" style="background: rgba(16,185,129,0.1); color: #6ee7b7;">含早</span>
                   </div>
                   <div class="text-right">
-                    <span class="text-[8px] line-through text-white/20">¥6,470</span>
-                    <span class="text-[9px] font-bold ml-1" style="color: #C3B1E1;">85折</span>
+                    <span class="text-[12px] font-bold" style="color: #C3B1E1;">¥5,500</span>
                   </div>
                 </div>
               </div>
@@ -365,7 +370,7 @@
       <div class="msg-item">
         <div class="chat-bubble-thinking p-3 space-y-1.5 text-[11px] opacity-70 max-w-[86%]" style="background: rgba(255, 255, 255, 0.03); border-left: 3px solid rgba(255, 255, 255, 0.15); border-radius: 14px 14px 14px 2px;">
           <p class="text-[#00F0FF] font-mono font-semibold mb-1" style="animation: scanLine 1.2s ease-in-out infinite;">小云 深度思考中...</p>
-          <p class="font-mono opacity-60">1. 触发银联生申卡服务</p>
+          <p class="font-mono opacity-60">1. 触发银联申卡服务</p>
           <p class="font-mono opacity-60">2. 匹配需求：高端酒店权益 + 极速制卡发卡</p>
         </div>
       </div>
@@ -375,19 +380,18 @@
         <p class="text-sm text-slate-200 leading-relaxed">不必妥协体验。小云建议您现在一键申请<span class="text-[#FFD700] font-semibold">「中信 IHG 联名信用卡」</span>——云闪付专属通道可实现 <span class="text-[#00F0FF] font-bold">3 分钟秒批</span>。使用该新卡支付酒店，享 85 折房价优惠 + 9 折餐饮优惠，新户还能直接获赠一次高端 SPA 体验，完美契合您的解压需求。具体权益如下：</p>
 
         <!-- 申卡推荐块 -->
-        <div class="apply-btn apply-btn-glow" onclick="this.innerHTML='<span class=\'text-xs text-[#00F0FF]\'>正在跳转申请页...</span>'" style="background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(109,93,255,0.15)); border: 1px solid rgba(0,240,255,0.4); border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 0 16px rgba(0,240,255,0.3); visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s 0.6s;">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#FFD700]/20 to-[#00F0FF]/10 border border-[#FFD700]/30 flex items-center justify-center flex-shrink-0">
-            <iconify-icon class="text-lg text-[#FFD700]" icon="solar:card-bold-duotone"></iconify-icon>
-          </div>
-          <div class="flex-1">
-            <p class="text-xs font-bold text-white">中信 IHG 联名信用卡</p>
-            <p class="text-[10px] text-white/50 mt-0.5">新户专享 · 3min秒批</p>
-          </div>
-          <div class="flex flex-col items-end gap-0.5">
-            <span class="text-[9px] bg-[#00F0FF]/15 text-[#00F0FF] px-2 py-0.5 rounded-full font-mono">立即申请</span>
-            <iconify-icon class="text-[#00F0FF] text-sm" icon="solar:alt-arrow-right-bold"></iconify-icon>
-          </div>
+      <div class="apply-btn apply-btn-glow" onclick="this.innerHTML='<span class=\'text-xs text-[#00F0FF]\'>正在跳转申请页...</span>'" style="background: url('./assets/ihg-card-bg.png') center/cover no-repeat; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.3); visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s 0.6s;">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);">
+          <iconify-icon class="text-lg text-white" icon="solar:card-bold-duotone"></iconify-icon>
         </div>
+        <div style="flex: 1; min-width: 0; overflow: hidden;">
+          <p class="text-xs font-bold text-white" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">中信 IHG 联名信用卡</p>
+          <p class="text-[10px] text-white/70 mt-0.5" style="text-shadow: 0 1px 2px rgba(0,0,0,0.4);">新户专享 · 3min秒批</p>
+        </div>
+        <div class="flex flex-col items-end gap-0.5">
+            <span class="text-[14px] px-2 py-0.5 rounded-full font-medium" style="background: rgba(255,255,255,0.2); color: white; backdrop-filter: blur(4px); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">立即申请</span>
+          </div>
+      </div>
 
         <!-- 权益详情卡片 -->
         <div class="benefits-card bg-white/5 rounded-2xl border border-[#FFD700]/15 overflow-hidden" style="visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s 0.6s;">
@@ -401,7 +405,7 @@
                 <iconify-icon class="text-[#8B7FE8] text-base" icon="solar:buildings-bold-duotone"></iconify-icon>
               </div>
               <div>
-                <p class="text-xs font-medium text-white/90">IHG 旗下酒店 85 折房价</p>
+                <p class="text-sm font-medium text-white/100">IHG 旗下酒店 85 折房价</p>
                 <p class="text-[10px] text-white/40 mt-0.5">覆盖洲际、丽晶、皇冠假日等全品牌，含免费早餐</p>
               </div>
             </div>
@@ -410,17 +414,8 @@
                 <iconify-icon class="text-[#FF8C42] text-base" icon="solar:chef-hat-bold-duotone"></iconify-icon>
               </div>
               <div>
-                <p class="text-xs font-medium text-white/90">酒店内餐饮 9 折优惠</p>
+                <p class="text-sm font-medium text-white/90">酒店内餐饮 9 折优惠</p>
                 <p class="text-[10px] text-white/40 mt-0.5">全日制餐厅、大堂吧、客房送餐均适用</p>
-              </div>
-            </div>
-            <div class="px-4 py-3 flex items-start gap-3">
-              <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background: rgba(200,185,200,0.15);">
-                <iconify-icon class="text-[#C8B9C8] text-base" icon="solar:hand-stars-bold-duotone"></iconify-icon>
-              </div>
-              <div>
-                <p class="text-xs font-medium text-white/90">新户赠高端 SPA 体验 1 次</p>
-                <p class="text-[10px] text-white/40 mt-0.5">60 分钟SPA护理，价值约 ¥800，完美契合您的解压需求</p>
               </div>
             </div>
             <div class="px-4 py-3 flex items-start gap-3">
@@ -428,8 +423,8 @@
                 <iconify-icon class="text-[#9BB0B8] text-base" icon="solar:star-bold-duotone"></iconify-icon>
               </div>
               <div>
-                <p class="text-xs font-medium text-white/90">赠送 IHG 钻石会籍</p>
-                <p class="text-[10px] text-white/40 mt-0.5">享房型免费升级、延迟退房至下午 4 点、专属入住通道</p>
+                <p class="text-sm font-medium text-white/90">赠送 IHG 金卡会籍</p>
+                <p class="text-[10px] text-white/40 mt-0.5">延迟退房至下午 2 点、优先登记入住</p>
               </div>
             </div>
             <div class="px-4 py-3 flex items-start gap-3">
@@ -437,8 +432,8 @@
                 <iconify-icon class="text-[#B8A99A] text-base" icon="solar:gift-bold-duotone"></iconify-icon>
               </div>
               <div>
-                <p class="text-xs font-medium text-white/90">新户消费满额赠 ¥500 消费金</p>
-                <p class="text-[10px] text-white/40 mt-0.5">核卡后 60 天内消费满 ¥3,000 即可领取</p>
+                <p class="text-sm font-medium text-white/90">新户赠高端 SPA 体验 1 次</p>
+                <p class="text-[10px] text-white/40 mt-0.5">60 分钟SPA护理，价值约 ¥800，完美契合您的解压需求</p>
               </div>
             </div>
           </div>
@@ -462,14 +457,14 @@
           <div class="bg-white/4 rounded-xl p-3 border border-white/6">
             <div class="flex items-center gap-2 mb-1">
               <span class="w-5 h-5 rounded-full bg-[#00F0FF]/15 text-[#00F0FF] flex items-center justify-center text-[10px] font-bold">1</span>
-              <p class="font-semibold text-white/90">日常补位：农行卡</p>
+              <p class="font-semibold text-white/90">日常补位：农行卡[4399]</p>
             </div>
             <p class="text-white/50 leading-relaxed pl-7">街头冰室、茶餐厅零星消费。今年还差 <span class="text-[#FFD700]">3 笔</span>即可免除次年年费，本次顺带达标。</p>
           </div>
           <div class="bg-white/4 rounded-xl p-3 border border-white/6">
             <div class="flex items-center gap-2 mb-1">
               <span class="w-5 h-5 rounded-full bg-[#00F0FF]/15 text-[#00F0FF] flex items-center justify-center text-[10px] font-bold">2</span>
-              <p class="font-semibold text-white/90">汇率与返现：云闪付</p>
+              <p class="font-semibold text-white/90">汇率与返现：云闪付二维码支付</p>
             </div>
             <p class="text-white/50 leading-relaxed pl-7">已为农行卡报名「香港超级汇率补贴」。海港城等商圈出示云闪付码，自动享超优汇率 + <span class="text-[#00F0FF]">境外 3% 返现</span>。</p>
             <!-- 优惠汇率阶梯图 -->
@@ -478,7 +473,10 @@
               <div class="px-3 py-2 flex items-center justify-between" style="background: rgba(232,90,79,0.08); border-bottom: 1px solid rgba(232,90,79,0.1);">
                 <div class="flex items-center gap-2">
                   <span class="text-[9px] text-white/50">到店消费6笔冲</span>
-                  <span class="text-[8px] px-1.5 py-0.5 rounded-full font-mono font-bold" style="background: rgba(45,55,72,0.8); color: #E85A4F;">5星汇率</span>
+                  <span class="text-[8px] px-1.5 py-0.5 rounded-full font-mono font-bold"
+                        style="background: rgba(255,193,7,0.15); color: #FFC107; border: 1px solid rgba(255,193,7,0.5);">
+                        5星汇率
+                  </span>
                 </div>
                 <div class="flex items-center gap-1.5">
                   <span class="text-[10px] font-bold" style="color: #E85A4F;">85.96</span>
@@ -491,8 +489,8 @@
                   <!-- 1星 -->
                   <div class="flex-1 flex flex-col items-center">
                     <div class="w-full rounded-lg py-2 px-1 text-center relative" style="background: rgba(245,213,197,0.08); border: 1px solid rgba(245,213,197,0.12);">
-                      <div class="text-[7px] text-white/30 mb-0.5">无门槛</div>
-                      <div class="text-[7px] px-1.5 py-0.5 rounded-full inline-block font-mono" style="background: rgba(245,213,197,0.15); color: #D4A574;">1星汇率</div>
+                      <div class="text-[9px] text-white/30 mb-0.5">无门槛</div>
+                      <div class="text-[9px] px-1.5 py-0.5 rounded-full inline-block font-mono" style="background: rgba(245,213,197,0.15); color: #D4A574;">1星汇率</div>
                       <div class="mt-1.5 flex justify-center">
                         <div class="w-4 h-4 rounded-full flex items-center justify-center" style="background: rgba(156,163,175,0.15);">
                           <iconify-icon class="text-[8px] text-white/25" icon="solar:lock-keyhole-bold"></iconify-icon>
@@ -504,8 +502,8 @@
                   <!-- 2星 -->
                   <div class="flex-1 flex flex-col items-center">
                     <div class="w-full rounded-lg py-2 px-1 text-center relative" style="background: rgba(245,213,197,0.08); border: 1px solid rgba(245,213,197,0.12);">
-                      <div class="text-[7px] text-white/30 mb-0.5">满1笔享</div>
-                      <div class="text-[7px] px-1.5 py-0.5 rounded-full inline-block font-mono" style="background: rgba(245,213,197,0.15); color: #D4A574;">2星汇率</div>
+                      <div class="text-[9px] text-white/30 mb-0.5">满1笔享</div>
+                      <div class="text-[9px] px-1.5 py-0.5 rounded-full inline-block font-mono" style="background: rgba(245,213,197,0.15); color: #D4A574;">2星汇率</div>
                       <div class="mt-1.5 flex justify-center">
                         <div class="w-4 h-4 rounded-full flex items-center justify-center" style="background: rgba(156,163,175,0.15);">
                           <iconify-icon class="text-[8px] text-white/25" icon="solar:lock-keyhole-bold"></iconify-icon>
@@ -517,8 +515,8 @@
                   <!-- 3星 -->
                   <div class="flex-1 flex flex-col items-center">
                     <div class="w-full rounded-lg py-2 px-1 text-center relative" style="background: rgba(245,213,197,0.08); border: 1px solid rgba(245,213,197,0.12);">
-                      <div class="text-[7px] text-white/30 mb-0.5">满2笔享</div>
-                      <div class="text-[7px] px-1.5 py-0.5 rounded-full inline-block font-mono" style="background: rgba(245,213,197,0.15); color: #D4A574;">3星汇率</div>
+                      <div class="text-[9px] text-white/30 mb-0.5">满2笔享</div>
+                      <div class="text-[9px] px-1.5 py-0.5 rounded-full inline-block font-mono" style="background: rgba(245,213,197,0.15); color: #D4A574;">3星汇率</div>
                       <div class="mt-1.5 flex justify-center">
                         <div class="w-4 h-4 rounded-full flex items-center justify-center" style="background: rgba(156,163,175,0.15);">
                           <iconify-icon class="text-[8px] text-white/25" icon="solar:lock-keyhole-bold"></iconify-icon>
@@ -530,8 +528,8 @@
                   <!-- 4星 -->
                   <div class="flex-1 flex flex-col items-center">
                     <div class="w-full rounded-lg py-2 px-1 text-center relative" style="background: rgba(245,213,197,0.08); border: 1px solid rgba(245,213,197,0.12);">
-                      <div class="text-[7px] text-white/30 mb-0.5">满4笔享</div>
-                      <div class="text-[7px] px-1.5 py-0.5 rounded-full inline-block font-mono" style="background: rgba(245,213,197,0.15); color: #D4A574;">4星汇率</div>
+                      <div class="text-[9px] text-white/30 mb-0.5">满4笔享</div>
+                      <div class="text-[9px] px-1.5 py-0.5 rounded-full inline-block font-mono" style="background: rgba(245,213,197,0.15); color: #D4A574;">4星汇率</div>
                       <div class="mt-1.5 flex justify-center">
                         <div class="w-4 h-4 rounded-full flex items-center justify-center" style="background: rgba(156,163,175,0.15);">
                           <iconify-icon class="text-[8px] text-white/25" icon="solar:lock-keyhole-bold"></iconify-icon>
@@ -543,8 +541,9 @@
                   <!-- 5星（高亮） -->
                   <div class="flex-1 flex flex-col items-center">
                     <div class="w-full rounded-lg py-2 px-1 text-center relative" style="background: rgba(232,90,79,0.12); border: 1px solid rgba(232,90,79,0.25); box-shadow: 0 0 12px rgba(232,90,79,0.1);">
-                      <div class="text-[7px] text-white/40 mb-0.5">满6笔享</div>
-                      <div class="text-[7px] px-1.5 py-0.5 rounded-full inline-block font-mono font-bold" style="background: rgba(45,55,72,0.9); color: #E85A4F;">5星汇率</div>
+                      <div class="text-[9px] text-white/40 mb-0.5">满6笔享</div>
+                      <div class="text-[9px] px-1.5 py-0.5 rounded-full font-mono font-bold" style="background: rgba(255,193,7,0.15); color: #FFC107; border: 1px solid rgba(255,193,7,0.5);">5星汇率</div>
+
                       <div class="mt-1.5 flex justify-center">
                         <div class="w-4 h-4 rounded-full flex items-center justify-center" style="background: rgba(232,90,79,0.2);">
                           <iconify-icon class="text-[8px]" style="color: #E85A4F;" icon="solar:star-bold"></iconify-icon>
@@ -557,9 +556,9 @@
                 <!-- 节省提示 -->
                 <div class="mt-3 rounded-lg px-3 py-2 flex items-center justify-center gap-1.5" style="background: rgba(232,90,79,0.06); border: 1px dashed rgba(232,90,79,0.15);">
                   <iconify-icon class="text-[10px]" style="color: #E85A4F;" icon="solar:tag-price-bold-duotone"></iconify-icon>
-                  <span class="text-[9px] text-white/50">每万元省</span>
-                  <span class="text-[11px] font-bold" style="color: #E85A4F;">175.66</span>
-                  <span class="text-[9px] text-white/50">元</span>
+                  <span class="text-[12px] text-white/50">每万元省</span>
+                  <span class="text-[12px] font-bold" style="color: #E85A4F;">175.66</span>
+                  <span class="text-[12px] text-white/50">元</span>
                 </div>
               </div>
             </div>
@@ -594,7 +593,7 @@
           <iconify-icon icon="solar:check-circle-bold"></iconify-icon>
           <span>中信 IHG 联名卡申请已提交，预计 3 分钟内到达审批结果</span>
         </div>
-        <p class="text-sm text-slate-200">信用卡「出境报备」已成功下发至各行。行程付款节点已部署，每个节点到期前 12 小时将推送提醒。完整行程安排如下：</p>
+        <p class="text-sm text-slate-200">好的，信用卡「出境报备」已成功下发至各行。行程付款节点已部署，每个节点到期前 12 小时将推送提醒。完整行程安排如下：</p>
 
         <!-- 行程单列表 -->
         <div class="itinerary-card bg-white/5 rounded-2xl border border-white/5 overflow-hidden" style="visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s 0.6s;">
@@ -603,19 +602,19 @@
               <iconify-icon class="text-[#00F0FF]" icon="solar:calendar-bold-duotone"></iconify-icon>
               <span class="font-semibold text-[#00F0FF] text-xs">香港三天行程单</span>
             </div>
-            <span class="text-[10px] text-white/30 font-mono">4.12 - 4.14</span>
+            <span class="text-white/30 font-mono " style="font-size: 11px;" >4.12 - 4.14</span>
           </div>
           <div class="divide-y divide-white/5">
             <!-- Day 1 -->
             <div class="px-4 py-2.5" style="background: rgba(181,198,207,0.04);">
-              <p class="text-[10px] font-bold mb-2" style="color: #9BB0B8;">DAY 1 · 4月12日 周一</p>
+              <p class="text-sm font-bold mb-2" style="color: #9BB0B8;">DAY 1 · 4月12日 周一</p>
               <div class="space-y-2">
                 <div class="flex items-center gap-3">
                   <div class="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(212,200,185,0.12);">
-                    <iconify-icon class="text-[#B8A99A] text-sm" icon="solar:airplane-bold"></iconify-icon>
+                    <iconify-icon icon="solar:plain-bold" style="color: #9BB0B8; font-size: 14px;"></iconify-icon>
                   </div>
                   <div class="flex-1">
-                    <p class="text-[11px] text-white/80">去程航班 CA101 北京→香港</p>
+                    <p class="text-[10px] text-white/80">去程航班 CA101 <br> 北京→香港</p>
                   </div>
                   <div class="text-right">
                     <p class="text-[11px] font-mono text-white/70">¥1,200</p>
@@ -642,7 +641,7 @@
                     <p class="text-[11px] text-white/80">香港丽晶酒店 入住</p>
                   </div>
                   <div class="text-right">
-                    <p class="text-[11px] font-mono text-white/70">¥1,833/晚</p>
+                    <p class="text-[11px] font-mono text-white/70">¥2,337/晚</p>
                     <p class="text-[9px]" style="color: #B8A99A;">中信IHG卡 · 85折</p>
                   </div>
                 </div>
@@ -650,14 +649,14 @@
             </div>
             <!-- Day 2 -->
             <div class="px-4 py-2.5" style="background: rgba(200,185,200,0.04);">
-              <p class="text-[10px] font-bold mb-2" style="color: #C8B9C8;">DAY 2 · 4月13日 周二</p>
+              <p class="text-sm font-bold mb-2" style="color: #C8B9C8;">DAY 2 · 4月13日 周二</p>
               <div class="space-y-2">
                 <div class="flex items-center gap-3">
                   <div class="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(212,200,185,0.12);">
                     <iconify-icon class="text-[#B8A99A] text-sm" icon="solar:chef-hat-bold"></iconify-icon>
                   </div>
                   <div class="flex-1">
-                    <p class="text-[11px] text-white/80">酒店早餐 + SPA 放松</p>
+                    <p class="text-[11px] text-white/80">酒店 SPA 放松</p>
                   </div>
                   <div class="text-right">
                     <p class="text-[11px] font-mono text-emerald-400">免费</p>
@@ -684,7 +683,7 @@
                     <p class="text-[11px] text-white/80">丽晶酒店 第2晚</p>
                   </div>
                   <div class="text-right">
-                    <p class="text-[11px] font-mono text-white/70">¥1,833/晚</p>
+                    <p class="text-[11px] font-mono text-white/70">¥2,337/晚</p>
                     <p class="text-[9px]" style="color: #B8A99A;">中信IHG卡 · 85折</p>
                   </div>
                 </div>
@@ -692,7 +691,7 @@
             </div>
             <!-- Day 3 -->
             <div class="px-4 py-2.5" style="background: rgba(212,200,185,0.04);">
-              <p class="text-[10px] font-bold mb-2" style="color: #B8A99A;">DAY 3 · 4月14日 周三</p>
+              <p class="text-sm font-bold mb-2" style="color: #B8A99A;">DAY 3 · 4月14日 周三</p>
               <div class="space-y-2">
                 <div class="flex items-center gap-3">
                   <div class="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(212,200,185,0.12);">
@@ -720,10 +719,11 @@
                 </div>
                 <div class="flex items-center gap-3">
                   <div class="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(181,198,207,0.12);">
-                    <iconify-icon class="text-[#9BB0B8] text-sm" icon="solar:airplane-bold"></iconify-icon>
+                    <iconify-icon icon="solar:plain-bold" style="color: #9BB0B8; font-size: 14px;"></iconify-icon>
+
                   </div>
                   <div class="flex-1">
-                    <p class="text-[11px] text-white/80">回程航班 CA102 香港→北京</p>
+                    <p class="text-[11px] text-white/80">回程航班 CA102 <br> 香港→北京</p>
                   </div>
                   <div class="text-right">
                     <p class="text-[11px] font-mono text-white/70">¥1,200</p>
@@ -750,7 +750,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-[10px] opacity-40">行程总支出</p>
-                <p class="text-sm font-bold text-white">¥8,475</p>
+                <p class="text-sm font-bold text-white">¥8,575</p>
               </div>
               <div class="text-center">
                 <p class="text-[10px] opacity-40">权益节省</p>
@@ -824,18 +824,48 @@
           </div>
 
           <!-- 消费足迹地图 -->
-          <div class="px-4 py-3 border-t border-white/5 space-y-2.5">
-            <div class="flex justify-between items-center">
-              <p class="text-xs font-bold">消费足迹地图</p>
-              <span class="text-[9px] text-white/25 italic">已自动聚合 28 笔交易</span>
-            </div>
-            <!-- 地图区域 -->
-            <div class="relative rounded-xl overflow-hidden" style="height: 220px;">
-              <!-- Leaflet 真实香港地图 -->
-              <div id="hkMap" class="w-full h-full" style="z-index: 1;"></div>
-              <!-- 地图标记点 -->
+<div class="px-4 py-3 border-t border-white/5 space-y-2.5">
+  <div class="flex justify-between items-center">
+    <p class="text-xs font-bold">消费足迹地图</p>
+    <span style="font-size:9px; color:rgba(255,255,255,0.25);" class="italic">已自动聚合 28 笔交易</span>
+  </div>
+  <!-- 地图区域 -->
+  <div class="relative rounded-xl overflow-hidden" style="height: 220px;">
+
+    <!-- 地图底图：去掉 filter，保留原图色彩 -->
+    <div class="w-full h-full" style="
+      background-image: url('hongkongmap.png');
+      background-size: cover;
+      background-position: center;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 1;
+    "></div>
+
+    <!-- 轻薄暗角蒙层，不影响中间亮度，仅让边缘融合更自然 -->
+    <div style="
+      position:absolute; top:0; left:0; right:0; bottom:0; z-index:2;
+      background: radial-gradient(ellipse at center, transparent 55%, rgba(5,15,40,0.55) 100%);
+    "></div>
+
+    <!-- 连线路径（更亮、更粗） -->
+    <svg viewBox="0 0 320 220" class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 5;">
+      <!-- 丽晶 → 海港城 -->
+      <path d="M166,66 Q140,80 122,110" fill="none" stroke="rgba(0,220,255,0.75)" stroke-width="2" stroke-dasharray="5,3"/>
+      <!-- 丽晶 → SOGO -->
+      <path d="M166,66 Q190,85 198,128" fill="none" stroke="rgba(0,220,255,0.75)" stroke-width="2" stroke-dasharray="5,3"/>
+      <!-- 海港城 → 机场 -->
+      <path d="M122,110 Q90,130 70,158" fill="none" stroke="rgba(255,180,80,0.75)" stroke-width="2" stroke-dasharray="5,3"/>
+      <!-- 连线端点光点 -->
+      <circle cx="166" cy="66" r="3" fill="rgba(0,240,255,0.9)"/>
+      <circle cx="122" cy="110" r="3" fill="rgba(255,140,66,0.9)"/>
+      <circle cx="198" cy="128" r="3" fill="rgba(176,38,255,0.9)"/>
+      <circle cx="70"  cy="158" r="3" fill="rgba(255,215,0,0.9)"/>
+    </svg>
+
+     <!-- 地图标记点 -->
               <!-- 丽晶酒店 -->
-              <div class="absolute" style="left: 52%; top: 30%; z-index: 10;">
+              <div class="absolute" style="left: 46%; top: 30%; z-index: 10;">
                 <div class="relative flex flex-col items-center">
                   <div class="absolute -top-7 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm border border-[#00F0FF]/40 rounded-lg px-2 py-1.5 whitespace-nowrap z-10 shadow-md">
                     <p class="text-[8px] font-bold text-[#00F0FF]">香港丽晶酒店</p>
@@ -846,7 +876,7 @@
                 </div>
               </div>
               <!-- 海港城 -->
-              <div class="absolute" style="left: 35%; top: 50%; z-index: 10;">
+              <div class="absolute" style="left: 30%; top: 50%; z-index: 10;">
                 <div class="relative flex flex-col items-center">
                   <div class="absolute -top-7 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm border border-[#FF8C42]/40 rounded-lg px-2 py-1.5 whitespace-nowrap z-10 shadow-md">
                     <p class="text-[8px] font-bold text-[#FF8C42]">海港城</p>
@@ -857,7 +887,7 @@
                 </div>
               </div>
               <!-- SOGO -->
-              <div class="absolute" style="left: 62%; top: 58%; z-index: 10;">
+              <div class="absolute" style="left: -32%; top: 58%; z-index: 10;">
                 <div class="relative flex flex-col items-center">
                   <div class="absolute -top-7 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm border border-[#B026FF]/40 rounded-lg px-2 py-1.5 whitespace-nowrap z-10 shadow-md">
                     <p class="text-[8px] font-bold text-[#B026FF]">SOGO · 莎莎</p>
@@ -867,7 +897,7 @@
                 </div>
               </div>
               <!-- 机场 -->
-              <div class="absolute" style="left: 22%; top: 72%; z-index: 10;">
+              <div class="absolute" style="left: 5%; top: 72%; z-index: 10;">
                 <div class="relative flex flex-col items-center">
                   <div class="absolute -top-7 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm border border-[#FFD700]/40 rounded-lg px-2 py-1.5 whitespace-nowrap z-10 shadow-md">
                     <p class="text-[8px] font-bold text-[#FFD700]">香港国际机场</p>
@@ -876,24 +906,22 @@
                   <div class="w-3.5 h-3.5 rounded-full bg-[#FFD700] border-2 border-white z-20 shadow-md" style="box-shadow: 0 0 8px rgba(255,215,0,0.5);"></div>
                 </div>
               </div>
-              <!-- 连线路径 -->
-              <svg viewBox="0 0 320 220" class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 5;">
-                <path d="M166,66 Q140,80 122,110" fill="none" stroke="rgba(0,150,200,0.35)" stroke-width="1.5" stroke-dasharray="4,3"/>
-                <path d="M166,66 Q190,85 198,128" fill="none" stroke="rgba(0,150,200,0.35)" stroke-width="1.5" stroke-dasharray="4,3"/>
-                <path d="M122,110 Q90,130 70,158" fill="none" stroke="rgba(200,130,0,0.35)" stroke-width="1.5" stroke-dasharray="4,3"/>
-              </svg>
-              <!-- 图例 -->
+
+    <!-- 图例 -->
+    <!-- 图例 -->
               <div class="absolute bottom-2 left-2 flex items-center gap-2.5 bg-white/90 backdrop-blur-sm rounded-lg px-2.5 py-1.5 border border-gray-200/50 shadow-sm" style="z-index: 20;">
                 <div class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#00F0FF]"></div><span class="text-[7px] text-gray-500">住宿</span></div>
                 <div class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#FF8C42]"></div><span class="text-[7px] text-gray-500">餐饮</span></div>
                 <div class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#B026FF]"></div><span class="text-[7px] text-gray-500">购物</span></div>
                 <div class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#FFD700]"></div><span class="text-[7px] text-gray-500">交通</span></div>
-              </div>
-            </div>
-          </div>
+
+  </div>
+</div>
+
 
           <!-- FinAI 支出价值评估 -->
-          <div class="mx-4 mb-3 bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-2xl p-3.5 border border-white/5 space-y-3">
+          <div class="mx-0 mb-3 rounded-2xl p-3.5 border border-white/5 space-y-3"
+     style="background: linear-gradient(135deg, rgba(120,90,255,0.16), rgba(180,120,255,0.10));">
             <div class="flex items-center gap-2">
               <iconify-icon class="text-rose-400" icon="solar:heart-bold"></iconify-icon>
               <p class="text-[11px] font-bold">FinAI 支出价值评估</p>
@@ -901,22 +929,25 @@
             </div>
             <div class="grid grid-cols-3 gap-2 text-center">
               <div class="bg-white/5 rounded-xl py-2 px-1">
-                <p class="text-sm font-bold text-[#00F0FF]">95%</p>
-                <p class="text-[8px] text-white/40 mt-0.5 leading-relaxed">消费集中度<br/>非冲动分散</p>
+                <p class="text-lg font-extrabold text-[#00F0FF]">95%</p>
+                <p class="text-[7px] text-white/40 mt-0.5 leading-relaxed">消费集中度<br/>非冲动分散</p>
               </div>
               <div class="bg-white/5 rounded-xl py-2 px-1">
-                <p class="text-sm font-bold text-[#FFD700]">+¥1,270</p>
-                <p class="text-[8px] text-white/40 mt-0.5 leading-relaxed">权益抵扣<br/>高于同类均值</p>
+                <p class="text-lg font-extrabold text-[#FFD700]">+¥1,270</p>
+                <p class="text-[7px] text-white/40 mt-0.5 leading-relaxed">权益抵扣<br/>高于同类均值</p>
               </div>
               <div class="bg-white/5 rounded-xl py-2 px-1">
-                <p class="text-sm font-bold text-emerald-400">100%</p>
-                <p class="text-[8px] text-white/40 mt-0.5 leading-relaxed">预算达标<br/>完美执行</p>
+                <p class="text-lg font-extrabold text-emerald-400">100%</p>
+                <p class="text-[7px] text-white/40 mt-0.5 leading-relaxed">预算达标<br/>完美执行</p>
               </div>
             </div>
             <p class="text-[10px] leading-relaxed text-white/50 italic border-l-2 border-rose-400/40 pl-3">
               本次旅行严格按预算执行，通过中信IHG卡85折房价、农行卡3%境外返现、工行白金接送机权益，累计节省 ¥1,270。从消费结构看，这是一次规划成熟的高性价比解压之旅。
             </p>
           </div>
+
+
+
         </div>
 
         <!-- 操作按钮 -->
@@ -925,9 +956,10 @@
             <iconify-icon class="text-lg" icon="solar:printer-bold-duotone"></iconify-icon>
             <span class="text-[10px]">一键导出发票</span>
           </button>
-          <button onclick="this.querySelector('span').textContent='分享成功';this.querySelector('iconify-icon').setAttribute('icon','solar:check-circle-bold')" class="flex-1 bg-gradient-to-tr from-[#6D5DFF] to-[#00F0FF] py-3 rounded-xl flex flex-col items-center gap-1 active:scale-95 transition-all shadow-lg">
+          <button onclick="this.querySelector('span').textContent='分享成功';this.querySelector('iconify-icon').setAttribute('icon','solar:check-circle-bold')" class="flex-1 bg-gradient-to-tr from-[#FFFFFF] to-[#FFFFFF] py-3 rounded-xl flex flex-col items-center gap-1 active:scale-95 transition-all ">
             <iconify-icon class="text-lg" icon="solar:medal-star-bold"></iconify-icon>
-            <span class="text-[10px]">一键分享海报</span>
+            <span style="color:#ffffff;font-size:10px;">一键分享海报</span>
+
           </button>
         </div>
       </div>
@@ -937,8 +969,8 @@
     <div id="chatMessages"></div>
 
   </div>
-
-  <!-- Input Bar -->
+  </div>
+<!-- Input Bar（与主页完全一致） -->
   <div class="px-6 py-4 bg-[#0A0C14]">
     <div class="relative flex items-center">
       <input id="chatInput" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-12 text-sm focus:outline-none focus:border-[#6D5DFF]/50 transition-all" placeholder="问问 小云AI..." type="text" onkeydown="if(event.key==='Enter')sendMessage()"/>
@@ -1011,6 +1043,43 @@
 </div>
 
 <script>
+  // ========== 按回车键跳过所有动画，立即显示全部内容 ==========
+  function skipAllAnimations() {
+    // 停止当前动画标志
+    isAnimating = false;
+
+    // 遍历所有未显示的 step，直接全部显示
+    for (let step = currentStep + 1; step <= totalSteps; step++) {
+      const stepEl = document.querySelector(`.chat-step[data-step="${step}"]`);
+      if (!stepEl) continue;
+      stepEl.style.display = 'block';
+      stepEl.style.opacity = '1';
+      stepEl.style.transform = 'translateY(0)';
+      stepEl.classList.add('visible');
+
+      // 所有子元素直接显示
+      stepEl.querySelectorAll('*').forEach(el => {
+        el.style.display = '';
+        el.style.opacity = '1';
+        el.style.visibility = 'visible';
+        el.style.transform = 'translateY(0)';
+        el.classList.remove('typewriter-cursor');
+      });
+    }
+
+    currentStep = totalSteps;
+
+    // 显示结束提示
+    const doneHint = document.getElementById('allDoneHint');
+    if (doneHint) doneHint.classList.add('visible');
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.target.matches('input, textarea')) {
+      skipAllAnimations();
+    }
+  });
+
   function openSidebar() {
     document.getElementById('sidebarPanel').classList.add('open');
     document.getElementById('sidebarOverlay').classList.add('open');
@@ -1089,17 +1158,43 @@
   const totalSteps = 6;
   let isAnimating = false;
 
+  // 将 innerHTML 拆分为 chunks（完整标签 + 单字符），确保打字时不会截断标签
+  function htmlToChunks(html) {
+    var chunks = [];
+    var i = 0;
+    while (i < html.length) {
+      if (html[i] === '<') {
+        var j = html.indexOf('>', i);
+        if (j === -1) j = html.length - 1;
+        chunks.push({ type: 'tag', value: html.substring(i, j + 1) });
+        i = j + 1;
+      } else {
+        chunks.push({ type: 'char', value: html[i] });
+        i++;
+      }
+    }
+    return chunks;
+  }
+
   function typeWriter(element, text, baseSpeed, callback) {
     isAnimating = true;
-    element.textContent = '';
+    var originalHtml = element.innerHTML;
+    element.innerHTML = '';
     element.classList.add('typewriter-cursor');
-    let i = 0;
+    var chunks = htmlToChunks(originalHtml);
+    var idx = 0;
     function type() {
-      if (i < text.length) {
-        element.textContent = text.substring(0, i + 1);
-        i++;
-        let delay = baseSpeed + Math.random() * 30 - 10;
-        const ch = text[i - 1];
+      if (idx < chunks.length) {
+        var chunk = chunks[idx];
+        idx++;
+        if (chunk.type === 'tag') {
+          element.innerHTML = chunks.slice(0, idx).map(function(c) { return c.value; }).join('');
+          type();
+          return;
+        }
+        element.innerHTML = chunks.slice(0, idx).map(function(c) { return c.value; }).join('');
+        var ch = chunk.value;
+        var delay = baseSpeed + Math.random() * 30 - 10;
         if ('，。！？、；：'.indexOf(ch) >= 0) {
           delay = baseSpeed * 3 + Math.random() * 80;
         } else if (',.!?;:'.indexOf(ch) >= 0) {
@@ -1138,16 +1233,23 @@
         var isUserBubble = child.querySelector('.bg-\\[\\#6D5DFF\\] p.text-sm');
         var isAiBubble = child.querySelector('.chat-bubble-ai p.text-sm');
         if (isUserBubble) {
+          // 用户消息：从右侧滑入+淡入
+          child.style.opacity = '0';
+          child.style.transform = 'translateX(20px)';
           child.style.display = '';
-          var pEl = child.querySelector('p.text-sm');
-          if (pEl && pEl.textContent.trim()) {
-            typeWriter(pEl, pEl.textContent, 40, processNext);
-          } else { fadeInElement(child, 300).then(processNext); }
+          requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+              child.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              child.style.opacity = '1';
+              child.style.transform = 'translateX(0)';
+              setTimeout(processNext, 420);
+            });
+          });
         } else if (isAiBubble) {
           child.style.display = '';
           var pEl = child.querySelector('p.text-sm');
           if (pEl && pEl.textContent.trim()) {
-            typeWriter(pEl, pEl.textContent, 50, function() {
+            typeWriter(pEl, pEl.textContent, 25, function() {
               // 打字完成后，优雅浮现延迟显示的子模块
               var delayedEls = child.querySelectorAll('.trip-plan-card, .apply-btn, .benefits-card, .deploy-cards, .savings-card, .itinerary-card, .report-card');
               if (delayedEls.length > 0) {

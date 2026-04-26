@@ -441,12 +441,191 @@
       </div>
     </div>
 
+    <!-- ==================== 新增 Step 6 开始 ==================== -->
+<div class="chat-step" data-step="6">
+
+  <!-- ① 系统通知气泡：审批通过 -->
+  <div class="msg-item flex justify-center">
+    <div class="flex items-center gap-2 px-4 py-2 rounded-full text-[11px]"
+         style="background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); color: #10B981;">
+      <iconify-icon icon="solar:shield-check-bold-duotone" class="text-sm"></iconify-icon>
+      <span>中信银行系统消息</span>
+    </div>
+  </div>
+
+  <!-- ② 系统消息正文 -->
+  <div class="chat-bubble-ai p-4 rounded-2xl rounded-tl-none space-y-3 msg-item"
+       style="border-left-color: #10B981; background: linear-gradient(135deg, rgba(16,185,129,0.12) 0%, rgba(0,240,255,0.05) 100%);">
+    <div class="flex items-start gap-2">
+      <!-- 中信银行 Logo 占位 -->
+
+      <div class="flex-1 space-y-2">
+
+        <p class="text-sm text-slate-200 leading-relaxed">
+          您的信用卡申请已<span class="text-emerald-400 font-bold">审批通过</span>，请携带您的
+          <span class="text-[#FFD700] font-semibold">有效身份证件</span>到附近的网点激活。
+          <span class="text-emerald-400 font-bold">@中信银行</span>，请帮助用户完成后续流程
+        </p>
+      </div>
+    </div>
+
+    <!-- @ 提及小云 -->
+    <div class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px]"
+         style="background: rgba(109,93,255,0.12); border: 1px solid rgba(109,93,255,0.2);">
+      <span class="text-sm text-white/60">@中信银行AI助手 &nbsp;帮助用户查询年费政策、附近网点、排队情况</span>
+
+    </div>
+  </div>
+
+  <!-- ③ 中信银行 AI 助手回复 -->
+  <div class="msg-item">
+    <!-- 助手标识栏 -->
+    <div class="flex items-center gap-2 mb-2 pl-1">
+      <div class="w-5 h-5 rounded-full flex items-center justify-center"
+           style="background: linear-gradient(135deg,#FFBAC8,#FFC9D1);">
+        <iconify-icon icon="fluent:bot-24-filled" class="text-[14px]" style="background-color: #E8EAF0;"></iconify-icon>
+      </div>
+      <span class="text-[14px] text-white/40">中信银行AI助手</span>
+    </div>
+
+    <div class="chat-bubble-ai p-4 rounded-2xl rounded-tl-none space-y-4"
+     style="border-left-color:#E8002D;
+            background:linear-gradient(135deg,rgba(232,0,45,0.10) 0%,rgba(0,240,255,0.04) 100%);
+            backdrop-filter: blur(6px);">
+
+  <!-- 引导文案 -->
+  <p class="text-sm text-slate-200 leading-relaxed">
+    欢迎申请中信银行信用卡！以下为您整理关键信息：
+  </p>
+
+  <!-- 卡片容器 -->
+  <div class="citic-info-cards space-y-3 text-[12px]"
+       style="visibility:hidden; opacity:0; transform:translateY(8px);
+              transition: all 0.6s ease;">
+
+    <!-- 卡片① -->
+    <div class="rounded-2xl p-3.5 border shadow-sm"
+         style="background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+                border-color:rgba(255,255,255,0.08);">
+
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
+                style="background:rgba(0,240,255,0.15); color:#00F0FF;">1</span>
+          <span class="text-white/90 font-semibold">年费政策</span>
+        </div>
+        <span class="text-[10px] text-white/30">费用说明</span>
+      </div>
+
+      <p class="text-white/60 leading-relaxed">
+        首年免年费；次年 <span class="text-[#FFD700]">￥600</span>，
+        刷满 <span class="text-[#FFD700]">6 笔</span> 可免。
+        联名卡额外赠送
+        <span class="text-[#00F0FF]">免费住宿权益</span>
+      </p>
+    </div>
+
+    <!-- 卡片② -->
+    <div class="rounded-2xl p-3.5 border shadow-sm"
+         style="background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+                border-color:rgba(255,255,255,0.08);">
+
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
+                style="background:rgba(0,240,255,0.15); color:#00F0FF;">2</span>
+          <span class="text-white/90 font-semibold">附近网点</span>
+        </div>
+        <span class="text-[10px] text-white/30">最近3家</span>
+      </div>
+
+      <div class="space-y-2">
+        <div class="flex justify-between text-white/70">
+          <span>望京支行</span>
+          <span class="text-[#00F0FF]">0.8 km</span>
+        </div>
+        <div class="flex justify-between text-white/70">
+          <span>酒仙桥支行</span>
+          <span class="text-[#00F0FF]">1.5 km</span>
+        </div>
+        <div class="flex justify-between text-white/70">
+          <span>朝阳门支行</span>
+          <span class="text-[#00F0FF]">2.3 km</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 卡片③ -->
+    <div class="rounded-2xl p-3.5 border shadow-sm"
+         style="background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+                border-color:rgba(255,255,255,0.08);">
+
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
+                style="background:rgba(0,240,255,0.15); color:#00F0FF;">3</span>
+          <span class="text-white/90 font-semibold">排队情况</span>
+        </div>
+        <span class="text-[10px] text-white/30">实时</span>
+      </div>
+
+      <div class="space-y-2">
+        <div class="flex justify-between items-center">
+          <span class="text-white/70">望京支行</span>
+          <span class="text-[11px] px-2 py-0.5 rounded-full"
+                style="background:rgba(16,185,129,0.15); color:#10B981;">
+            畅通 · 5分钟
+          </span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-white/70">酒仙桥支行</span>
+          <span class="text-[11px] px-2 py-0.5 rounded-full"
+                style="background:rgba(255,193,7,0.15); color:#FFC107;">
+            一般 · 20分钟
+          </span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-white/70">朝阳门支行</span>
+          <span class="text-[11px] px-2 py-0.5 rounded-full"
+                style="background:rgba(239,68,68,0.15); color:#EF4444;">
+            繁忙 · 45分钟
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA按钮 -->
+  <button onclick="this.innerHTML='<iconify-icon icon=\'solar:check-circle-bold\' class=\'text-emerald-400\'></iconify-icon><span class=\'text-xs text-emerald-400\'> 已开始导航</span>'"
+          class="w-full py-2.5 rounded-xl text-xs font-medium flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+          style="background:linear-gradient(90deg,rgba(140,160,240,0.4),rgba(0,240,255,0.25));
+                 border:1px solid rgba(140,210,245,0.3); color:#C7D9FF;">
+    <iconify-icon icon="solar:map-point-bold-duotone" class="text-sm"></iconify-icon>
+    前往最近网点（望京支行）
+  </button>
+
+</div>
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+
+
+
     <!-- Step 4: 用户消息4 + AI回复4 -->
     <div class="chat-step" data-step="4">
       <!-- User Message 4 -->
       <div class="flex justify-end msg-item">
         <div class="bg-[#6D5DFF] p-4 rounded-2xl rounded-tr-none max-w-[80%]">
-          <p class="text-sm">这个思路好！直接帮我省了一笔SPA钱。那当地吃喝玩乐怎么刷？</p>
+          <p class="text-sm">信用卡激活完成！思路不错，直接帮我省了一笔SPA钱。那当地吃喝玩乐怎么刷？</p>
         </div>
       </div>
 

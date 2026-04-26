@@ -441,8 +441,8 @@
       </div>
     </div>
 
-    <!-- ==================== 新增 Step 6 开始 ==================== -->
-<div class="chat-step" data-step="6">
+    <!-- ==================== 新增 Step 4 开始 ==================== -->
+    <div class="chat-step" data-step="4">
 
   <!-- ① 系统通知气泡：审批通过 -->
   <div class="msg-item flex justify-center">
@@ -470,11 +470,13 @@
     </div>
 
     <!-- @ 提及小云 -->
-    <div class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px]"
-         style="background: rgba(109,93,255,0.12); border: 1px solid rgba(109,93,255,0.2);">
-      <span class="text-sm text-white/60">@中信银行AI助手 &nbsp;帮助用户查询年费政策、附近网点、排队情况</span>
+<div class="citic-mention-tag flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px]"
+     style="background: rgba(109,93,255,0.12); border: 1px solid rgba(109,93,255,0.2);
+            visibility:hidden; opacity:0; transform:translateY(8px);
+            transition: opacity 0.6s ease, transform 0.6s ease;">
+  <span class="text-sm text-white/60">@中信银行AI助手 &nbsp;帮助用户查询年费政策、附近网点、排队情况</span>
+</div>
 
-    </div>
   </div>
 
   <!-- ③ 中信银行 AI 助手回复 -->
@@ -499,12 +501,12 @@
   </p>
 
   <!-- 卡片容器 -->
-  <div class="citic-info-cards space-y-3 text-[12px]"
+  <div class="citic-info-cards space-y-3 text-[12px] msg-item"
        style="visibility:hidden; opacity:0; transform:translateY(8px);
               transition: all 0.6s ease;">
 
     <!-- 卡片① -->
-    <div class="rounded-2xl p-3.5 border shadow-sm"
+    <div class="rounded-2xl p-3.5 border shadow-sm msg-item"
          style="background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
                 border-color:rgba(255,255,255,0.08);">
 
@@ -526,7 +528,7 @@
     </div>
 
     <!-- 卡片② -->
-    <div class="rounded-2xl p-3.5 border shadow-sm"
+    <div class="rounded-2xl p-3.5 border shadow-sm msg-item"
          style="background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
                 border-color:rgba(255,255,255,0.08);">
 
@@ -556,7 +558,7 @@
     </div>
 
     <!-- 卡片③ -->
-    <div class="rounded-2xl p-3.5 border shadow-sm"
+    <div class="rounded-2xl p-3.5 border shadow-sm msg-item"
          style="background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
                 border-color:rgba(255,255,255,0.08);">
 
@@ -606,23 +608,14 @@
   </button>
 
 </div>
-
-
-
-
-
-
-
-
     </div>
 
 </div>
 
 
-
-    <!-- Step 4: 用户消息4 + AI回复4 -->
-    <div class="chat-step" data-step="4">
-      <!-- User Message 4 -->
+    <!-- Step 5: 用户消息5 + AI回复5 -->
+    <div class="chat-step" data-step="5">
+      <!-- User Message 5 -->
       <div class="flex justify-end msg-item">
         <div class="bg-[#6D5DFF] p-4 rounded-2xl rounded-tr-none max-w-[80%]">
           <p class="text-sm">信用卡激活完成！思路不错，直接帮我省了一笔SPA钱。那当地吃喝玩乐怎么刷？</p>
@@ -757,9 +750,9 @@
       </div>
     </div>
 
-    <!-- Step 5: 用户消息5 + AI回复5 -->
-    <div class="chat-step" data-step="5">
-      <!-- User Message 5 -->
+    <!-- Step 6: 用户消息6 + AI回复6 -->
+    <div class="chat-step" data-step="6">
+      <!-- User Message 6 -->
       <div class="flex justify-end msg-item">
         <div class="bg-[#6D5DFF] p-4 rounded-2xl rounded-tr-none max-w-[80%]">
           <p class="text-sm leading-relaxed">绝了，就按这个办！马上帮我提交那张中信卡的申请。另外，把这个行程的付款节点给我盯紧点。</p>
@@ -951,8 +944,8 @@
       </div>
     </div>
 
-    <!-- Step 6: 分隔标签 + 用户消息6 + AI回复6 -->
-    <div class="chat-step" data-step="6">
+    <!-- Step 7: 分隔标签 + 用户消息7 + AI回复7 -->
+    <div class="chat-step" data-step="7">
       <!-- 分隔标签：香港之旅结束之后 -->
       <div class="flex items-center gap-3 py-3">
         <div class="flex-1 h-px bg-white/10"></div>
@@ -1334,7 +1327,7 @@
 <script>
   // ========== 对话逐步显示逻辑 ==========
   let currentStep = 0;
-  const totalSteps = 6;
+  const totalSteps = 7;
   let isAnimating = false;
 
   // 将 innerHTML 拆分为 chunks（完整标签 + 单字符），确保打字时不会截断标签
@@ -1392,15 +1385,17 @@
   }
 
   function fadeInElement(el, duration) {
-    return new Promise(function(resolve) {
-      el.style.display = '';
-      el.style.opacity = '0';
-      el.style.transition = 'opacity ' + duration + 'ms ease';
-      void el.offsetHeight;
-      el.style.opacity = '1';
-      setTimeout(resolve, duration);
-    });
-  }
+  return new Promise(function(resolve) {
+    var origDisplay = el._origDisplay || 'block';
+    el.style.display = origDisplay;          // ← 用原始值，不用 ''
+    el.style.opacity = '0';
+    el.style.transition = 'none';
+    void el.offsetHeight;
+    el.style.transition = 'opacity ' + duration + 'ms ease';
+    el.style.opacity = '1';
+    setTimeout(resolve, duration);
+  });
+}
 
   function renderStepSequentially(stepEl) {
     return new Promise(function(resolve) {
@@ -1412,16 +1407,16 @@
         var isUserBubble = child.querySelector('.bg-\\[\\#6D5DFF\\] p.text-sm');
         var isAiBubble = child.querySelector('.chat-bubble-ai p.text-sm');
         if (isUserBubble) {
-          // 用户消息：从右侧滑入+淡入
           child.style.opacity = '0';
           child.style.transform = 'translateX(20px)';
-          child.style.display = '';
+          child.style.transition = 'none';
+          child.style.display = child._origDisplay || 'flex';   // ← 恢复 flex，不用 ''
           requestAnimationFrame(function() {
             requestAnimationFrame(function() {
-              child.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              child.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
               child.style.opacity = '1';
               child.style.transform = 'translateX(0)';
-              setTimeout(processNext, 420);
+              setTimeout(processNext, 480);
             });
           });
         } else if (isAiBubble) {
@@ -1430,7 +1425,10 @@
           if (pEl && pEl.textContent.trim()) {
             typeWriter(pEl, pEl.textContent, 25, function() {
               // 打字完成后，优雅浮现延迟显示的子模块
-              var delayedEls = child.querySelectorAll('.trip-plan-card, .apply-btn, .benefits-card, .deploy-cards, .savings-card, .itinerary-card, .report-card');
+              var delayedEls = child.querySelectorAll(
+                '.trip-plan-card, .apply-btn, .benefits-card, .deploy-cards, ' +
+                '.savings-card, .itinerary-card, .report-card, .citic-info-cards, .citic-mention-tag'
+              );
               if (delayedEls.length > 0) {
                 var idx = 0;
                 function showNext() {
@@ -1440,11 +1438,11 @@
                     el.style.visibility = 'visible';
                     el.style.display = '';
                     void el.offsetHeight;
-                    el.style.opacity = '1';
+                    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease'; // ← 先 transition
+                    el.style.opacity = '1';                                            // ← 再 opacity
                     el.style.transform = 'translateY(0)';
-                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    setTimeout(showNext, 500);
-                  }, 150);
+                    setTimeout(showNext, 520);
+                  }, 180);
                 }
                 showNext();
               } else {
@@ -1461,25 +1459,29 @@
   }
 
   function revealNextStep() {
-    if (currentStep >= totalSteps || isAnimating) return;
-    currentStep++;
-    var nextStepEl = document.querySelector('.chat-step[data-step="' + currentStep + '"]');
-    if (!nextStepEl) return;
-    isAnimating = true;
-    var children = Array.from(nextStepEl.children);
-    children.forEach(function(child) { child.style.display = 'none'; });
-    nextStepEl.style.display = 'block';
-    nextStepEl.style.opacity = '1';
-    nextStepEl.style.transform = 'translateY(0)';
-    nextStepEl.classList.add('visible');
-    renderStepSequentially(nextStepEl).then(function() {
-      isAnimating = false;
-      if (currentStep >= totalSteps) {
-        var doneHint = document.getElementById('allDoneHint');
-        if (doneHint) doneHint.classList.add('visible');
-      }
-    });
-  }
+  if (currentStep >= totalSteps || isAnimating) return;
+  currentStep++;
+  var nextStepEl = document.querySelector('.chat-step[data-step="' + currentStep + '"]');
+  if (!nextStepEl) return;
+  isAnimating = true;
+  var children = Array.from(nextStepEl.children);
+  children.forEach(function(child) {
+    // 记住原始 display（flex / block / 空）再隐藏
+    child._origDisplay = window.getComputedStyle(child).display;
+    child.style.display = 'none';
+  });
+  nextStepEl.style.display = 'block';
+  nextStepEl.style.opacity = '1';
+  nextStepEl.style.transform = 'translateY(0)';
+  nextStepEl.classList.add('visible');
+  renderStepSequentially(nextStepEl).then(function() {
+    isAnimating = false;
+    if (currentStep >= totalSteps) {
+      var doneHint = document.getElementById('allDoneHint');
+      if (doneHint) doneHint.classList.add('visible');
+    }
+  });
+}
 
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.flex-1.overflow-y-auto').addEventListener('click', function(e) {

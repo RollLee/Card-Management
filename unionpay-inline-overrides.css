@@ -157,7 +157,7 @@ body > div:first-of-type {
 .flex.justify-end > div:first-child p,
 [class*="justify-end"] > div:first-child p {
   color: #1a1a1a !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
   line-height: 22px !important;
 }
 

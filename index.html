@@ -380,16 +380,18 @@
         <p class="text-sm text-slate-200 leading-relaxed">不必妥协体验。小云建议您现在一键申请<span class="text-[#FFD700] font-semibold">「中信 IHG 联名信用卡」</span>——云闪付专属通道可实现 <span class="text-[#00F0FF] font-bold">3 分钟秒批</span>。使用该新卡支付酒店，享 85 折房价优惠 + 9 折餐饮优惠，新户还能直接获赠一次高端 SPA 体验，完美契合您的解压需求。具体权益如下：</p>
 
         <!-- 申卡推荐块 -->
-      <div class="apply-btn apply-btn-glow" onclick="this.innerHTML='<span class=\'text-xs text-[#00F0FF]\'>正在跳转申请页...</span>'" style="background: url('./assets/ihg-card-bg.png') center/cover no-repeat; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.3); visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s 0.6s;">
-        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);">
+      <div class="apply-btn apply-btn-glow" onclick="this.innerHTML='<span class=\'text-xs text-[#00F0FF]\'>正在跳转申请页...</span>'" style="background: url('./assets/ihg-card-bg.png') center/cover no-repeat; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.3); visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s 0.6s; position: relative; overflow: hidden;">
+        <!-- 底部渐变遮罩，确保文字可读 -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(15,58,74,0.65) 0%, rgba(30,90,106,0.45) 40%, rgba(122,154,165,0.3) 100%); border-radius: 12px; pointer-events: none;"></div>
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); position: relative; z-index: 1;">
           <iconify-icon class="text-lg text-white" icon="solar:card-bold-duotone"></iconify-icon>
         </div>
-        <div style="flex: 1; min-width: 0; overflow: hidden;">
-          <p class="text-xs font-bold text-white" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">中信 IHG 联名信用卡</p>
-          <p class="text-[10px] text-white/70 mt-0.5" style="text-shadow: 0 1px 2px rgba(0,0,0,0.4);">新户专享 · 3min秒批</p>
+        <div style="flex: 1; min-width: 0; overflow: hidden; position: relative; z-index: 1;">
+          <p class="text-xs font-bold" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f0f8ff; text-shadow: 0 1px 6px rgba(0,0,0,0.7), 0 0 12px rgba(255,255,255,0.15);">中信 IHG 联名信用卡</p>
+          <p class="text-[10px] mt-0.5" style="color: #e0f0ff; text-shadow: 0 1px 4px rgba(0,0,0,0.6);">新户专享 · 3min秒批</p>
         </div>
-        <div class="flex flex-col items-end gap-0.5">
-            <span class="text-[14px] px-2 py-0.5 rounded-full font-medium" style="background: rgba(255,255,255,0.2); color: white; backdrop-filter: blur(4px); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">立即申请</span>
+        <div class="flex flex-col items-end gap-0.5" style="position: relative; z-index: 1;">
+            <span class="text-[14px] px-2.5 py-1 rounded-full font-medium" style="background: rgba(255,255,255,0.3); color: #f0f8ff; backdrop-filter: blur(4px); text-shadow: 0 1px 4px rgba(0,0,0,0.5);">立即申请</span>
           </div>
       </div>
 
@@ -462,9 +464,8 @@
       <div class="flex-1 space-y-2">
 
         <p class="text-sm text-slate-200 leading-relaxed">
-          您的信用卡申请已<span class="text-emerald-400 font-bold">审批通过</span>，请携带您的
-          <span class="text-[#FFD700] font-semibold">有效身份证件</span>到附近的网点激活。
-          <span class="text-emerald-400 font-bold">@中信银行</span>，请帮助用户完成后续流程
+          您的信用卡申请已<span class="text-emerald-400 font-bold">审批通过</span>，请携带您的<span class="text-[#FFD700] font-semibold">有效身份证件</span>到附近的网点激活。
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg font-bold text-xs" style="background: rgba(255,140,66,0.12); border: 1px solid rgba(255,140,66,0.2); color: #FF8C42;">@中信银行</span>请帮助用户完成后续流程
         </p>
       </div>
     </div>
@@ -520,10 +521,9 @@
       </div>
 
       <p class="text-white/60 leading-relaxed">
-        首年免年费；次年 <span class="text-[#FFD700]">￥600</span>，
-        刷满 <span class="text-[#FFD700]">6 笔</span> 可免。
-        联名卡额外赠送
-        <span class="text-[#00F0FF]">免费住宿权益</span>
+        首年免年费；次年 <span class="text-[#FFD700]">￥300</span>，
+        刷满 <span class="text-[#FFD700]">5 笔</span>可免。
+        联名卡额外赠送<span class="text-[#00F0FF]">高端 SPA 体验 1 次</span>
       </p>
     </div>
 
@@ -1113,7 +1113,7 @@
                 <p class="text-[7px] text-white/40 mt-0.5 leading-relaxed">预算达标<br/>完美执行</p>
               </div>
             </div>
-            <p class="text-[10px] leading-relaxed text-white/50 italic border-l-2 border-rose-400/40 pl-3">
+            <p class="text-[9px] leading-relaxed text-white/50 border-l-2 border-rose-400/40 pl-3">
               本次旅行严格按预算执行，通过中信IHG卡85折房价、农行卡3%境外返现、工行白金接送机权益，累计节省 ¥1,270。从消费结构看，这是一次规划成熟的高性价比解压之旅。
             </p>
           </div>
@@ -1146,7 +1146,7 @@
   <div class="px-6 py-4 bg-[#0A0C14]">
     <div class="relative flex items-center">
       <input id="chatInput" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-12 text-sm focus:outline-none focus:border-[#6D5DFF]/50 transition-all" placeholder="问问 小云AI..." type="text" onkeydown="if(event.key==='Enter')sendMessage()"/>
-      <iconify-icon class="absolute left-4 text-xl opacity-40" icon="solar:minimalistic-magnifer-bold-duotone"></iconify-icon>
+      <iconify-icon class="absolute left-4 text-3xl opacity-40" icon="solar:add-circle-bold-duotone"></iconify-icon>
       <button id="sendBtn" onclick="sendMessage()" class="absolute right-2 w-10 h-10 bg-gradient-to-tr from-[#6D5DFF] to-[#00F0FF] rounded-xl flex items-center justify-center shadow-lg ai-glow">
         <iconify-icon class="text-white" icon="solar:plain-bold"></iconify-icon>
       </button>

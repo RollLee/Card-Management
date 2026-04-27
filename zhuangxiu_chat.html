@@ -913,15 +913,21 @@
       ],
       tooltip: {
         trigger: 'axis',
-        backgroundColor: 'rgba(10,12,20,0.96)',
-        borderColor: 'rgba(255,255,255,0.08)',
+        backgroundColor: '#FFFFFF',
+        borderColor: 'rgba(0,0,0,0.08)',
         borderWidth: 1,
         padding: [8, 12],
-        textStyle: { color: '#F8F9FA', fontSize: 10 },
+        textStyle: { color: '#1A1A1A', fontSize: 10 },
+        extraCssText: 'box-shadow: 0 4px 16px rgba(0,0,0,0.12); border-radius: 8px;',
         formatter: function(params) {
-          let s = '<b>' + params[0].axisValue + '</b><br/>';
+          let s = '<b style="color:#111;">' + params[0].axisValue + '</b><br/>';
           params.forEach(function(p) {
-            s += '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:' + p.color + ';margin-right:6px;"></span>' + p.seriesName + '：<b>¥' + p.value + ',000</b><br/>';
+            // 色块颜色直接用 p.color（渐变色时取起始色）
+            const dotColor = (typeof p.color === 'object') ? p.color.colorStops[0].color : p.color;
+            s += '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'
+               + dotColor + ';margin-right:6px;"></span>'
+               + '<span style="color:#555;">' + p.seriesName + '：</span>'
+               + '<b style="color:#111;">¥' + p.value + ',000</b><br/>';
           });
           return s;
         }
@@ -985,15 +991,18 @@
       }],
 
       tooltip: {
-        backgroundColor: 'rgba(10,12,20,0.96)',
-        borderColor: 'rgba(255,255,255,0.08)',
+        backgroundColor: '#FFFFFF',
+        borderColor: 'rgba(0,0,0,0.08)',
         borderWidth: 1,
         padding: [8, 12],
-        textStyle: { color: '#F8F9FA', fontSize: 10 },
+        textStyle: { color: '#1A1A1A', fontSize: 10 },
+        extraCssText: 'box-shadow: 0 4px 16px rgba(0,0,0,0.12); border-radius: 8px;',
         formatter: function(p) {
-          return '<b>' + p.name + '</b><br/>月均支出：<b>¥' + p.value.toLocaleString() + '</b><br/>占比：<b>' + p.percent + '%</b>';
+          return '<b style="color:#111;">' + p.name + '</b><br/>'
+            + '<span style="color:#555;">月均支出：</span><b style="color:#111;">¥' + p.value.toLocaleString() + '</b><br/>'
+            + '<span style="color:#555;">占比：</span><b style="color:#111;">' + p.percent + '%</b>';
         }
-      }
+      },
     });
 
     // 响应式
